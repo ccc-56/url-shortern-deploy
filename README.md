@@ -12,7 +12,12 @@ manually create deployable tf files
 ```
 
 
-#### the deploy architecture is:
+
+
+
+
+
+#### reference1: the deploy architecture is:
 ```
 Internet
     ↓
@@ -25,7 +30,7 @@ Private App in ecs service
 Private redis Valkey
 ```
 
-#### the shorten url project code arch is:
+#### reference2: the shorten url project code arch is:
 ```
                  Client
                    |
