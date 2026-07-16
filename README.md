@@ -4,7 +4,11 @@
 #### I deployed it in the aws ap-southeast-1 https://sh.dongzh.store/ for demo
 #### my workflow:
 ```
-deploy the URL-shortern project manually on aws console  ->  use former2 to generate the tf files from previous aws resource  ->  manually create deployable tf files
+deploy the URL-shortern project manually on aws console
+    ↓
+use former2 to generate the tf files from previous aws resource
+    ↓
+manually create deployable tf files
 ```
 
 
