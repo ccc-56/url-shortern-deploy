@@ -8,7 +8,7 @@ deploy the URL-shortern project manually on aws console
     ↓
 use former2 to generate the tf files from previous aws resource for try
     ↓
-manually create deployable tf files
+manually create deployable tf files and test to deploy it in ap-south-1
 ```
   \
   \
