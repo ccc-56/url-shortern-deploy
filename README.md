@@ -10,10 +10,11 @@ use former2 to generate the tf files from previous aws resource
     ↓
 manually create deployable tf files
 ```
-    <br>
-    <br>
-    <br>
-    <br>
+  \
+  \
+  \
+  \
+
 *reference1: the deploy architecture is:*
 ```
 Internet
