@@ -10,14 +10,15 @@ use former2 to generate the tf files from previous aws resource
     ↓
 manually create deployable tf files
 ```
-
-
-
-
-
-
-
-#### reference1: the deploy architecture is:
+    
+    
+    
+    
+    
+    
+    
+    
+*reference1: the deploy architecture is:*
 ```
 Internet
     ↓
@@ -30,7 +31,7 @@ Private App in ecs service
 Private redis Valkey
 ```
 
-#### reference2: the shorten url project code arch is:
+*reference2: the shorten url project code arch is:*
 ```
                  Client
                    |
