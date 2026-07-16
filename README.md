@@ -1,6 +1,7 @@
 # url-shortern-deploy
 
-#### this project is deploy the github project: https://github.com/05sanjaykumar/URL-shortern on aws , the demo address is: https://sh.dongzh.store/
+#### this project is deploy the github project: https://github.com/05sanjaykumar/URL-shortern
+#### the demo locate at: https://sh.dongzh.store/, I deployed it in the aws ap-southeast-1
 
 #### the deploy architecture is:
 ```
