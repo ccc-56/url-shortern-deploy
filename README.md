@@ -14,10 +14,7 @@ manually create deployable tf files
     
     
     
-    
-    
-    
-    
+
 *reference1: the deploy architecture is:*
 ```
 Internet
