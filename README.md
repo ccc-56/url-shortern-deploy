@@ -1,6 +1,6 @@
 # url-shortern-deploy
 
-#### this project is try to deploy the github project: https://github.com/05sanjaykumar/URL-shortern
+#### this project is try to deploy the github project: https://github.com/ccc-56/URL-shortern
 #### I deployed it in the aws ap-southeast-1 https://sh.dongzh.store/ for demo
 #### my workflow:
 ```
