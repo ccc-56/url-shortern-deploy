@@ -23,3 +23,5 @@ crash.*.log
 # Sensitive files
 *.pem
 *.key
+
+.terraform.lock.hcl

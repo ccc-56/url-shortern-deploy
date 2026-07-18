@@ -10,6 +10,13 @@ use former2 to generate the tf files from previous aws resource for reference
     ↓
 manually create deployable tf files and test to deploy it in ap-south-1
 ```
+
+step of deploy:
+cd terraform-from-scratch/environments/dev
+terraform init -reconfigure
+terraform plan  -var-file=./terraform.tfvars
+terraform apply  -var-file=./terraform.tfvars
+
   \
   \
   \
