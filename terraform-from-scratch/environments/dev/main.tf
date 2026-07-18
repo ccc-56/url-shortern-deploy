@@ -19,3 +19,12 @@ module "vpc" {
  }
 
 }
+
+module "internet_gateway" {
+
+ source = "../../modules/internet-gateway"
+ vpc_id = module.vpc.vpc_id
+ public_subnet_ids = module.vpc.public_subnet_ids
+ vpc_name = var.vpc_name
+
+}
