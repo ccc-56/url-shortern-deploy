@@ -18,11 +18,8 @@ variable "private_subnet_cidrs" {
   type = list(string)
 }
 
-variable "tag_name" {
-  type = string
-}
-
-variable "project_name" {
-  type = string
+variable "tags" {
+  type = map(string)
+  default = {}
 }
 
