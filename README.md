@@ -1,21 +1,23 @@
 # url-shortern-deploy
 
-#### this project is try to deploy the github project: https://github.com/ccc-56/URL-shortern
-#### I deployed it in the aws ap-southeast-1 https://sh.dongzh.store/ for demo
-#### my workflow:
-```
-deploy the URL-shortern project manually on aws console
-    ↓
-use former2 to generate the tf files from previous aws resource for reference
-    ↓
-manually create deployable tf files and test to deploy it in ap-south-1
+#### The project is try to deploy the github project: https://github.com/ccc-56/URL-shortern
+#### I manully deployed it in the aws ap-southeast-1 https://sh.dongzh.store/ for demo        
+#### then created those terraform repo, which can be used to create the same environment with only few input change.    
+
+
+terraform-generated -> used former2 to generate the tf files from aws resource   
+terraform-from-scratch -> manully create it first, then with some tools    
+
+
+
+
 ```
 
 step of deploy:  \
 cd terraform-from-scratch/environments/dev  \
 terraform init -reconfigure  \
 terraform plan  -var-file=./terraform.tfvars  \
-terraform apply  -var-file=./terraform.tfvars  \
+terraform apply  -var-file=./terraform.tfvars   
 
   \
   \
