@@ -10,19 +10,18 @@ terraform-from-scratch -> manually create it first, then with some tools
 
 
 
-```
-
-step of deploy:  \
-cd terraform-from-scratch/environments/dev  \
-terraform init -reconfigure  \
-terraform plan  -var-file=./terraform.tfvars  \
-terraform apply  -var-file=./terraform.tfvars   
-
-  \
-  \
-  \
-  \
-  \
+step of deploy:     
+cd 01-network && terraform init && terraform apply -var-file=terraform-test.tfvars    
+                                terraform init -reconfigure -backend-config="key=test/network.tfstate" && terraform apply -var-file=terraform-test.tfvars     
+cd ../02-data && terraform init  && terraform apply -var-file=terraform-test.tfvar    
+                              terraform init -reconfigure -backend-config="key=test/data.tfstate" && terraform apply -var-file=terraform-test.tfvars    
+cd ../03-app  && terraform init && terraform apply -var-file=terraform-test.tfvars    
+                              terraform init -reconfigure -backend-config="key=test/app.tfstate"  && terraform apply -var-file=terraform-test.tfvars   
+    
+    
+    
+    
+     
 *reference1: the deploy architecture is:*
 ```
 Internet
