@@ -21,7 +21,8 @@ All layers share the existing backend bucket `shortn1-terraform-state-bucket`
 
 ## Isolation from `dev`
 
-`test` uses its own VPC CIDR (`10.62.0.0/16`), its own ECR repos
+`test` deploys to `ap-northeast-1` (set in `terraform-test.tfvars`) with its own
+VPC CIDR (`10.75.0.0/16`), its own ECR repos
 (`urls-test/app`, `urls-test/nginx`), and its own ECS cluster
 (`url-shortener-test-cluster`), so it never collides with the `dev` stack in the
 same account/region.
@@ -41,47 +42,16 @@ Destroy in reverse order (`03-app` → `02-data` → `01-network`).
 
 ## Deploying to a different region
 
-Everything is overridable from the CLI — `-var` beats `terraform.tfvars`. The
-remote-state bucket region is decoupled from the deploy region via `state_region`
-(defaults to `ap-south-1`, where the state bucket lives), so you can deploy to any
-region while keeping state in the existing bucket. Give each layer its own state
-key with `-backend-config` so it doesn't overwrite the default `test/*` state.
-
-Example — deploy to `ap-northeast-1` with CIDR `10.74.0.0/16`:
-
-```bash
-# 1) NETWORK
-cd 01-network
-terraform init -reconfigure -backend-config="key=test-apne1/network.tfstate"
-terraform apply \
-  -var="region=ap-northeast-1" \
-  -var="vpc_cidr=10.74.0.0/16" \
-  -var='azs=["ap-northeast-1a","ap-northeast-1c"]' \
-  -var='public_subnet_cidrs=["10.74.10.0/24","10.74.20.0/24"]' \
-  -var='private_subnet_cidrs=["10.74.11.0/24","10.74.21.0/24"]'
-
-# 2) DATA
-cd ../02-data
-terraform init -reconfigure -backend-config="key=test-apne1/data.tfstate"
-terraform apply \
-  -var="region=ap-northeast-1" \
-  -var="network_state_key=test-apne1/network.tfstate"
-
-# 3) APP
-cd ../03-app
-terraform init -reconfigure -backend-config="key=test-apne1/app.tfstate"
-terraform apply \
-  -var="region=ap-northeast-1" \
-  -var="network_state_key=test-apne1/network.tfstate" \
-  -var="data_state_key=test-apne1/data.tfstate"
-```
-
-For that region the nginx image must be built with `resolver 10.74.0.2` (VPC base
-`+2`). ECR repos (`urls-test/*`) are per-region, so they don't clash with other
-regions' repos.
+`region`, `azs`, and the CIDRs all live in `terraform-test.tfvars` — edit them
+there to target another region. The remote-state bucket region is separate
+(`state_region`, defaults to `ap-south-1` where the state bucket lives), so state
+stays in the existing bucket regardless of deploy region. If you want a second
+region to coexist with this one, give each layer its own state key at `init`
+(`-backend-config="key=..."`) so it doesn't overwrite the default `test/*` state,
+and set the matching `network_state_key`/`data_state_key` for the upper layers.
 
 ## Prerequisites before `03-app` works end to end
 
 1. Push app/nginx images to the `urls-test/*` ECR repos (created by `03-app`).
-2. The nginx image must use `resolver 10.62.0.2` (the `test` VPC DNS, i.e. VPC
+2. The nginx image must use `resolver 10.75.0.2` (the `test` VPC DNS, i.e. VPC
    base `+2`) — the resolver is baked into the image, not Terraform.

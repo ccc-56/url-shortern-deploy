@@ -1,4 +1,4 @@
-region = "ap-south-1"
+region = "ap-northeast-1"
 
 vpc_name = "short-test-vpc"
 

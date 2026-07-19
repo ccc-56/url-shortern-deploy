@@ -1,12 +1,12 @@
-region = "ap-south-1"
+region = "ap-northeast-1"
 
 vpc_name = "short-test-vpc"
 
 vpc_cidr = "10.75.0.0/16"
 
 azs = [
-  "ap-south-1a",
-  "ap-south-1b"
+  "ap-northeast-1a",
+  "ap-northeast-1c"
 ]
 
 public_subnet_cidrs = [
