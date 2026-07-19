@@ -1,13 +1,12 @@
 # url-shortern-deploy
 
 #### The project is try to deploy the github project: https://github.com/ccc-56/URL-shortern
-#### I manully deployed it in the aws ap-southeast-1 https://sh.dongzh.store/ for demo        
+#### I manually deployed it in the aws ap-southeast-1 https://sh.dongzh.store/ for demo        
 #### then created those terraform repo, which can be used to create the same environment with only few input change.    
 
 
 terraform-generated -> used former2 to generate the tf files from aws resource   
-terraform-from-scratch -> manully create it first, then with some tools    
-
+terraform-from-scratch -> manually create it first, then with some tools    
 
 
 
