@@ -28,10 +28,13 @@ same account/region.
 
 ## Apply order (bottom-up)
 
+Each layer's variables live in `terraform-test.tfvars`. It is **not** auto-loaded
+(only `terraform.tfvars`/`*.auto.tfvars` are), so pass it explicitly:
+
 ```bash
-cd 01-network && terraform init && terraform apply -var-file=terraform.tfvars
-cd ../02-data && terraform init && terraform apply -var-file=terraform.tfvars
-cd ../03-app && terraform init && terraform apply -var-file=terraform.tfvars
+cd 01-network && terraform init && terraform apply -var-file=terraform-test.tfvars
+cd ../02-data && terraform init && terraform apply -var-file=terraform-test.tfvars
+cd ../03-app && terraform init && terraform apply -var-file=terraform-test.tfvars
 ```
 
 Destroy in reverse order (`03-app` → `02-data` → `01-network`).
