@@ -11,3 +11,8 @@ variable "public_subnet_ids" {
   default = []
 }
 
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+

@@ -2,9 +2,12 @@ resource "aws_internet_gateway" "this" {
 
   vpc_id = var.vpc_id
 
-  tags = {
-    Name = "${var.vpc_name}-igw"
-  }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.vpc_name}-igw"
+    }
+  )
 
 }
 
@@ -16,6 +19,13 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.this.id
   }
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.vpc_name}-public-rt"
+    }
+  )
 
 }
 
