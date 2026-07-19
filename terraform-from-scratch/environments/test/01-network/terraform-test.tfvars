@@ -2,7 +2,7 @@ region = "ap-south-1"
 
 vpc_name = "short-test-vpc"
 
-vpc_cidr = "10.62.0.0/16"
+vpc_cidr = "10.75.0.0/16"
 
 azs = [
   "ap-south-1a",
@@ -10,13 +10,13 @@ azs = [
 ]
 
 public_subnet_cidrs = [
-  "10.62.10.0/24",
-  "10.62.20.0/24"
+  "10.75.10.0/24",
+  "10.75.20.0/24"
 ]
 
 private_subnet_cidrs = [
-  "10.62.11.0/24",
-  "10.62.21.0/24"
+  "10.75.11.0/24",
+  "10.75.21.0/24"
 ]
 
 tag_name = "short-test"
