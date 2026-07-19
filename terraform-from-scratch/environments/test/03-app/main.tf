@@ -16,7 +16,7 @@ data "terraform_remote_state" "network" {
   config = {
     bucket = var.state_bucket
     key    = var.network_state_key
-    region = var.region
+    region = var.state_region
   }
 }
 
@@ -26,7 +26,7 @@ data "terraform_remote_state" "data" {
   config = {
     bucket = var.state_bucket
     key    = var.data_state_key
-    region = var.region
+    region = var.state_region
   }
 }
 
