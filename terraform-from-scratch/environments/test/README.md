@@ -36,6 +36,47 @@ cd ../03-app && terraform init && terraform apply -var-file=terraform.tfvars
 
 Destroy in reverse order (`03-app` → `02-data` → `01-network`).
 
+## Deploying to a different region
+
+Everything is overridable from the CLI — `-var` beats `terraform.tfvars`. The
+remote-state bucket region is decoupled from the deploy region via `state_region`
+(defaults to `ap-south-1`, where the state bucket lives), so you can deploy to any
+region while keeping state in the existing bucket. Give each layer its own state
+key with `-backend-config` so it doesn't overwrite the default `test/*` state.
+
+Example — deploy to `ap-northeast-1` with CIDR `10.74.0.0/16`:
+
+```bash
+# 1) NETWORK
+cd 01-network
+terraform init -reconfigure -backend-config="key=test-apne1/network.tfstate"
+terraform apply \
+  -var="region=ap-northeast-1" \
+  -var="vpc_cidr=10.74.0.0/16" \
+  -var='azs=["ap-northeast-1a","ap-northeast-1c"]' \
+  -var='public_subnet_cidrs=["10.74.10.0/24","10.74.20.0/24"]' \
+  -var='private_subnet_cidrs=["10.74.11.0/24","10.74.21.0/24"]'
+
+# 2) DATA
+cd ../02-data
+terraform init -reconfigure -backend-config="key=test-apne1/data.tfstate"
+terraform apply \
+  -var="region=ap-northeast-1" \
+  -var="network_state_key=test-apne1/network.tfstate"
+
+# 3) APP
+cd ../03-app
+terraform init -reconfigure -backend-config="key=test-apne1/app.tfstate"
+terraform apply \
+  -var="region=ap-northeast-1" \
+  -var="network_state_key=test-apne1/network.tfstate" \
+  -var="data_state_key=test-apne1/data.tfstate"
+```
+
+For that region the nginx image must be built with `resolver 10.74.0.2` (VPC base
+`+2`). ECR repos (`urls-test/*`) are per-region, so they don't clash with other
+regions' repos.
+
 ## Prerequisites before `03-app` works end to end
 
 1. Push app/nginx images to the `urls-test/*` ECR repos (created by `03-app`).

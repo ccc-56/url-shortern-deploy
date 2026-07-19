@@ -9,6 +9,12 @@ variable "state_bucket" {
   default     = "shortn1-terraform-state-bucket"
 }
 
+variable "state_region" {
+  description = "Region of the remote-state S3 bucket (independent of the deploy region)."
+  type        = string
+  default     = "ap-south-1"
+}
+
 variable "network_state_key" {
   description = "State key of the network layer to read outputs from."
   type        = string
