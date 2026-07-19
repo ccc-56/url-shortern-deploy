@@ -7,7 +7,7 @@ variable "vpc_name" {
 }
 
 variable "public_subnet_ids" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
