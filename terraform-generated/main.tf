@@ -11,6 +11,14 @@ provider "aws" {
     region = "ap-southeast-1"
 }
 
+# CIDR allowed to reach administrative ports (e.g. SSH). Defaults to the VPC
+# range so nothing is exposed to the public internet. Override with a trusted
+# office/VPN CIDR if remote admin access is required.
+variable "ssh_ingress_cidr" {
+    type    = string
+    default = "10.68.0.0/16"
+}
+
 resource "aws_vpc" "EC2VPC" {
     cidr_block = "10.68.0.0/16"
     enable_dns_support = true
@@ -31,7 +39,9 @@ resource "aws_vpc_endpoint" "EC2VPCEndpoint" {
     {
       "Action": "*",
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+        "AWS": "arn:aws:iam::787987774269:root"
+      },
       "Resource": "*"
     }
   ]
@@ -58,7 +68,9 @@ resource "aws_vpc_endpoint" "EC2VPCEndpoint2" {
     {
       "Action": "*",
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+        "AWS": "arn:aws:iam::787987774269:root"
+      },
       "Resource": "*"
     }
   ]
@@ -85,7 +97,9 @@ resource "aws_vpc_endpoint" "EC2VPCEndpoint3" {
     {
       "Action": "*",
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+        "AWS": "arn:aws:iam::787987774269:root"
+      },
       "Resource": "*"
     }
   ]
@@ -116,14 +130,6 @@ resource "aws_security_group" "EC2SecurityGroup" {
         to_port = 80
     }
     ingress {
-        cidr_blocks = [
-            "0.0.0.0/0"
-        ]
-        from_port = 6379
-        protocol = "tcp"
-        to_port = 6379
-    }
-    ingress {
         security_groups = [
             "sg-09915fed9f49b5af2"
         ]
@@ -132,8 +138,8 @@ resource "aws_security_group" "EC2SecurityGroup" {
         to_port = 6379
     }
     ingress {
-        cidr_blocks = [
-            "0.0.0.0/0"
+        security_groups = [
+            "${aws_security_group.EC2SecurityGroup4.id}"
         ]
         from_port = 3000
         protocol = "tcp"
@@ -241,7 +247,7 @@ resource "aws_security_group" "EC2SecurityGroup5" {
     vpc_id = "${aws_vpc.EC2VPC.id}"
     ingress {
         cidr_blocks = [
-            "0.0.0.0/0"
+            var.ssh_ingress_cidr
         ]
         from_port = 22
         protocol = "tcp"
